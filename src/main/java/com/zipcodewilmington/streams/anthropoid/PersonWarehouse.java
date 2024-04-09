@@ -5,8 +5,13 @@ import com.zipcodewilmington.streams.tools.logging.LoggerHandler;
 import com.zipcodewilmington.streams.tools.logging.LoggerWarehouse;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+
 
 /**
  * Created by leon on 5/29/17.
@@ -29,6 +34,20 @@ public final class PersonWarehouse implements Iterable<Person> {
         people.add(person);
     }
 
+//    public static <T> Predicate<T> distinctByKey(
+//            Function<? super T, ?> keyExtractor) {
+//
+//        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+//        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+//    }
+
+    public static <T> Predicate<T> distinctByKey(
+            Function<? super T, ?> keyExtractor) {
+
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
+
     /**
      * @return list of names of Person objects
      */ // TODO
@@ -39,8 +58,8 @@ public final class PersonWarehouse implements Iterable<Person> {
     /**
      * @return list of uniquely named Person objects
      */ //TODO
-    public Stream<Person> getUniquelyNamedPeople() {return people.stream().distinct().collect(Collectors.toList()).stream();
-    }//Added for push
+    public Stream<Person> getUniquelyNamedPeople() {return people.stream().filter(distinctByKey(Person::getName));
+    }
 
 
     /**
@@ -56,8 +75,7 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a Stream of respective
      */ //TODO
     public Stream<Person> getFirstNUniquelyNamedPeople(int n) {
-        return people.stream().collect(Collectors.groupingBy(Person::getName, Collectors.counting())).entrySet().stream().filter(entry -> entry.getValue() == 1).map(Map.Entry::getKey).limit(n)
-                .map(name -> people.stream().filter(person -> person.getName().equals(name)).findFirst().orElse(null)).filter(Objects::nonNull).collect(Collectors.toList()).stream();
+        return people.stream().filter(distinctByKey(Person::getName)).limit(n);
     }
 
     /**

@@ -34,7 +34,7 @@ public class StreamFilter {
      * @param people - List of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(List<Person> people, Character startingCharacter) {this(Stream.empty(), null);
+    public StreamFilter(List<Person> people, Character startingCharacter) {this(Stream.empty(), startingCharacter);
     }
 
 
