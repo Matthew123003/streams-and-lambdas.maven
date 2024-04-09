@@ -27,16 +27,14 @@ public class StreamFilter {
      * @param people - Array of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(Person[] people, Character startingCharacter) {
-        this(Stream.empty(), null);
+    public StreamFilter(Person[] people, Character startingCharacter) {this(Stream.of(people).limit(100), startingCharacter);
     }
 
     /**
      * @param people - List of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(List<Person> people, Character startingCharacter) {
-        this(Stream.empty(), null);
+    public StreamFilter(List<Person> people, Character startingCharacter) {this(Stream.empty(), null);
     }
 
 

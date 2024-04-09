@@ -32,16 +32,14 @@ public final class PersonWarehouse implements Iterable<Person> {
     /**
      * @return list of names of Person objects
      */ // TODO
-    public List<String> getNames() {
-        return new ArrayList<>();
+    public List<String> getNames() {return people.stream().map(Person::getName).collect(Collectors.toList());
     }
 
 
     /**
      * @return list of uniquely named Person objects
      */ //TODO
-    public Stream<Person> getUniquelyNamedPeople() {
-        return null;
+    public Stream<Person> getUniquelyNamedPeople() {return people.stream().distinct().collect(Collectors.toList()).stream();
     }//Added for push
 
 
@@ -50,7 +48,7 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a Stream of respective
      */ //TODO
     public Stream<Person> getUniquelyNamedPeopleStartingWith(Character character) {
-        return null;
+        return people.stream().filter(p -> p.getName().charAt(0) == character).collect(Collectors.toMap(Person::getName, p -> p, (p1, p2) -> p1)).values().stream();
     }
 
     /**
@@ -58,14 +56,15 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a Stream of respective
      */ //TODO
     public Stream<Person> getFirstNUniquelyNamedPeople(int n) {
-        return null;
+        return people.stream().collect(Collectors.groupingBy(Person::getName, Collectors.counting())).entrySet().stream().filter(entry -> entry.getValue() == 1).map(Map.Entry::getKey).limit(n)
+                .map(name -> people.stream().filter(person -> person.getName().equals(name)).findFirst().orElse(null)).filter(Objects::nonNull).collect(Collectors.toList()).stream();
     }
 
     /**
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public Map<Long, String> getIdToNameMap() {
-        return new HashMap<>();
+        return null;//people.stream().collect(Collectors.groupingBy(Person::getPersonalId));
     }
 
 
@@ -80,8 +79,7 @@ public final class PersonWarehouse implements Iterable<Person> {
     /**
      * @return Stream of all Aliases
      */ // TODO
-    public Stream<String> getAllAliases() {
-        return null;
+    public Stream<String> getAllAliases() {return null;
     }
 
     // DO NOT MODIFY
