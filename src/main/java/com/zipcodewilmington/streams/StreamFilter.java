@@ -5,6 +5,7 @@ import com.zipcodewilmington.streams.anthropoid.PersonFactory;
 import com.zipcodewilmington.streams.tools.RandomUtils;
 import com.zipcodewilmington.streams.tools.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,14 +28,18 @@ public class StreamFilter {
      * @param people - Array of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(Person[] people, Character startingCharacter) {this(Stream.of(people).limit(100), startingCharacter);
+    public StreamFilter(Person[] people, Character startingCharacter) {
+        this.personStream = Arrays.stream(people).limit(100);
+        this.startingCharacter = startingCharacter.toString();
     }
 
     /**
      * @param people - List of person objects
      * @param startingCharacter - character to filter by
      */ //TODO
-    public StreamFilter(List<Person> people, Character startingCharacter) {this(Stream.empty(), startingCharacter);
+    public StreamFilter(List<Person> people, Character startingCharacter) {
+        this.personStream = people.stream().limit(100);
+        this.startingCharacter = startingCharacter.toString();
     }
 
 
