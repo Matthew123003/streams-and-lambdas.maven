@@ -90,15 +90,14 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return Stream of Stream of Aliases
      */ // TODO
     public Stream<Stream<String>> getNestedAliases() {
-        return null;
+        return people.stream().map(person -> Arrays.stream(person.getAliases()));
     }
 
 
     /**
      * @return Stream of all Aliases
      */ // TODO
-    public Stream<String> getAllAliases() {return null;
-    }
+    public Stream<String> getAllAliases() {return people.stream().map(person -> (Arrays.toString(person.getAliases())));}
 
     // DO NOT MODIFY
     public Boolean contains(Person p) {
