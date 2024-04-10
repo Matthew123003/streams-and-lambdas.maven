@@ -82,7 +82,7 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public Map<Long, String> getIdToNameMap() {
-        return null;//people.stream().collect(Collectors.groupingBy(Person::getPersonalId));
+        return people.stream().collect(Collectors.toMap(Person::getPersonalId, Person::getName));
     }
 
 
